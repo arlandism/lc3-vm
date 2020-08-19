@@ -153,7 +153,12 @@ int main(int argc, const char* argv[]) {
         }
       }
         break;
-      case OP_LD:
+      case OP_LD: {
+        u_int16_t offset = instr & 0x100;
+        u_int16_t r0 = (instr >> 9) & 0x7;
+        reg[r0] = reg[R_PC] + sign_extend(offset, 0xff);
+        update_flags(reg[r0]);
+      }
         break;
       case OP_LDI:
         break;
