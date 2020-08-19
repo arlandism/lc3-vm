@@ -142,7 +142,16 @@ int main(int argc, const char* argv[]) {
         reg[R_PC] = reg[r];
       }
         break;
-      case OP_JSR:
+      case OP_JSR: {
+        reg[R_R7] = reg[R_PC];
+        u_int16_t flag = (instr >> 11) & 0xf;
+        if (flag) {
+          reg[R_PC] = sign_extend(instr & 0x7ff, 0xff);
+        } else {
+          u_int16_t base_reg = (instr >> 6) & 0x7;
+          reg[R_PC] = reg[base_reg];
+        }
+      }
         break;
       case OP_LD:
         break;
