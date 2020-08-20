@@ -177,7 +177,12 @@ int main(int argc, const char* argv[]) {
         update_flags(r0);
       }
         break;
-      case OP_LEA:
+      case OP_LEA: {
+        u_int16_t r0 = (instr >> 9) & 0x7;
+        u_int16_t offset = instr & 0x100;
+        reg[r0] = reg[R_PC] + sign_extend(offset, 0xff);
+        update_flags(r0)
+      }
         break;
       case OP_ST:
         break;
