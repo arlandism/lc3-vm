@@ -70,6 +70,10 @@ uint16_t mem_read(uint16_t r) {
   return 1;
 }
 
+void mem_write(uint16_t addr, uint16_t val) {
+
+}
+
 int main(int argc, const char* argv[]) {
   if (argc < 2) {
     printf("lc3 [image-file1] ...\n");
@@ -181,10 +185,14 @@ int main(int argc, const char* argv[]) {
         u_int16_t r0 = (instr >> 9) & 0x7;
         u_int16_t offset = instr & 0x100;
         reg[r0] = reg[R_PC] + sign_extend(offset, 0xff);
-        update_flags(r0)
+        update_flags(r0);
       }
         break;
-      case OP_ST:
+      case OP_ST: {
+        u_int16_t r0 = (instr >> 9) & 0x7;
+        u_int16_t offset = instr & 0x100;
+        mem_write(reg[R_PC] + sign_extend(offset, 0xff), reg[r0]);
+      }
         break;
       case OP_STI:
         break;
