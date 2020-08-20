@@ -169,7 +169,13 @@ int main(int argc, const char* argv[]) {
         update_flags(r0);
       }
         break;
-      case OP_LDR:
+      case OP_LDR: {
+        u_int16_t r0 = (instr >> 9) & 0x7;
+        u_int16_t r1 = (instr >> 6) & 0x7;
+        u_int16_t offset = instr & 0x3f;
+        reg[r0] = mem_read(r1 + sign_extend(offset, 0xff));
+        update_flags(r0);
+      }
         break;
       case OP_LEA:
         break;
