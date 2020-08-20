@@ -156,11 +156,18 @@ int main(int argc, const char* argv[]) {
       case OP_LD: {
         u_int16_t offset = instr & 0x100;
         u_int16_t r0 = (instr >> 9) & 0x7;
-        reg[r0] = reg[R_PC] + sign_extend(offset, 0xff);
+        reg[r0] = mem_read(reg[R_PC] + sign_extend(offset, 0xff));
         update_flags(reg[r0]);
       }
         break;
-      case OP_LDI:
+      case OP_LDI: {
+        u_int16_t r0 = (instr >> 9) & 0x7;
+        u_int16_t offset = instr & 0x100;
+        u_int16_t addr0 = reg[R_PC] + sign_extend(offset, 0xff);
+        u_int16_t addr1 = mem_read(addr0);
+        reg[r0] = mem_read(addr1);
+        update_flags(reg[r0]);
+      }
         break;
       case OP_LDR:
         break;
