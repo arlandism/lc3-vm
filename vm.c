@@ -104,7 +104,7 @@ int main(int argc, const char* argv[]) {
           uint16_t r2 = instr & 0x7;
           reg[r0] = reg[r1] + reg[r2];
         }
-        update_flags(reg[r0]);
+        update_flags(r0);
       }
       break;
       case OP_AND: {
@@ -118,14 +118,14 @@ int main(int argc, const char* argv[]) {
           uint16_t r2 = instr & 0x7;
           reg[r0] = reg[r1] & reg[r2];
         }
-        update_flags(reg[r0]);
+        update_flags(r0);
       }
         break;
       case OP_NOT: {
           u_int16_t r0 = (instr >> 9) & 0x7;
           u_int16_t r1 = (instr >> 6) & 0x7;
           reg[r0] = r1 ^ 0xff;
-          update_flags(reg[r0]);
+          update_flags(r0);
         }
         break;
       case OP_BR: {
@@ -157,7 +157,7 @@ int main(int argc, const char* argv[]) {
         u_int16_t offset = instr & 0x100;
         u_int16_t r0 = (instr >> 9) & 0x7;
         reg[r0] = mem_read(reg[R_PC] + sign_extend(offset, 0xff));
-        update_flags(reg[r0]);
+        update_flags(r0);
       }
         break;
       case OP_LDI: {
@@ -166,7 +166,7 @@ int main(int argc, const char* argv[]) {
         u_int16_t addr0 = reg[R_PC] + sign_extend(offset, 0xff);
         u_int16_t addr1 = mem_read(addr0);
         reg[r0] = mem_read(addr1);
-        update_flags(reg[r0]);
+        update_flags(r0);
       }
         break;
       case OP_LDR:
