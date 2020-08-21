@@ -230,6 +230,12 @@ int main(int argc, const char* argv[]) {
           }
           break;
           case TRAP_PUTS: {
+            uint16_t *c = memory + reg[R_R0];
+            while(*c) {
+              putc((char)*c, stdout);
+              ++c;
+            }
+            fflush(stdout);
           }
           break;
           case TRAP_IN: {
