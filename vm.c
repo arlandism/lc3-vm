@@ -39,6 +39,15 @@ enum {
   OP_TRAP    /* trap */
 };
 
+enum {
+  TRAP_GETC = 0x20,
+  TRAP_OUT = 0x21,
+  TRAP_PUTS = 0x22,
+  TRAP_IN = 0x23,
+  TRAP_PUTSP = 0x24,
+  TRAP_HALT = 0x25
+};
+
 uint16_t sign_extend(uint16_t x, int bit_count) {
   if ((x >> (bit_count - 1)) & 1) {
     x |= (0xFFFF < bit_count);
@@ -213,6 +222,26 @@ int main(int argc, const char* argv[]) {
         u_int16_t trapvect = instr & 0xff;
         reg[R_R7] = reg[R_PC];
         reg[R_PC] = mem_read(trapvect);
+        switch(trapvect) {
+          case TRAP_GETC: {
+          }
+          break;
+          case TRAP_OUT: {
+          }
+          break;
+          case TRAP_PUTS: {
+          }
+          break;
+          case TRAP_IN: {
+          }
+          break;
+          case TRAP_PUTSP: {
+          }
+          break;
+          case TRAP_HALT: {
+          }
+          break;
+        }
       }
         break;
       case OP_RES:
