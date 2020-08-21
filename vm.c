@@ -227,6 +227,9 @@ int main(int argc, const char* argv[]) {
           }
           break;
           case TRAP_OUT: {
+            uint16_t c = reg[R_R0] & 0xf;
+            putc((char)*c, stdout);
+            fflush(stdout);
           }
           break;
           case TRAP_PUTS: {
