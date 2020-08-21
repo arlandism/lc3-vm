@@ -202,7 +202,12 @@ int main(int argc, const char* argv[]) {
         mem_write(addr1, r0);
       }
         break;
-      case OP_STR:
+      case OP_STR: {
+        u_int16_t r0 = (instr >> 6) & 0x7;
+        u_int16_t r1 = (instr >> 9) & 0x7;
+        u_int16_t offset = instr & 0x3f;
+        mem_write(r0 + sign_extend(offset, 0xff), r1);
+      }
         break;
       case OP_TRAP:
         break;
