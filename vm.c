@@ -133,9 +133,9 @@ int main(int argc, const char* argv[]) {
         }
         break;
       case OP_BR: {
-        u_int16_t check_pos = (instr >> 9) & 0x1 & reg[R_COND] == FL_NEG;
-        u_int16_t check_zero = (instr >> 10) & 0x1 & reg[R_COND] == FL_ZRO;
-        u_int16_t check_neg = (instr >> 11) & reg[R_COND] == FL_POS;
+        u_int16_t check_pos = (instr >> 9) & 0x1 & (reg[R_COND] == FL_NEG);
+        u_int16_t check_zero = (instr >> 10) & 0x1 & (reg[R_COND] == FL_ZRO);
+        u_int16_t check_neg = (instr >> 11) & (reg[R_COND] == FL_POS);
         if (check_pos || check_neg || check_zero) {
           reg[R_PC] = reg[R_PC] + sign_extend(instr & 0xff, 0xff);
         }
@@ -218,6 +218,7 @@ int main(int argc, const char* argv[]) {
       case OP_RES:
       case OP_RTI:
       default:
+        abort();
         break;
     }
   }
