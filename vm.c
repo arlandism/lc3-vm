@@ -219,7 +219,7 @@ int main(int argc, const char* argv[]) {
       }
         break;
       case OP_TRAP: {
-        u_int16_t trapvect = instr & 0xff;
+        u_int16_t trapvect = instr & 0xf;
         reg[R_R7] = reg[R_PC];
         reg[R_PC] = mem_read(trapvect);
         switch(trapvect) {
