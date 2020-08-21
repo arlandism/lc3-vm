@@ -209,7 +209,11 @@ int main(int argc, const char* argv[]) {
         mem_write(r0 + sign_extend(offset, 0xff), r1);
       }
         break;
-      case OP_TRAP:
+      case OP_TRAP: {
+        u_int16_t trapvect = instr & 0xff;
+        reg[R_R7] = reg[R_PC];
+        reg[R_PC] = mem_read(trapvect);
+      }
         break;
       case OP_RES:
       case OP_RTI:
