@@ -194,7 +194,13 @@ int main(int argc, const char* argv[]) {
         mem_write(reg[R_PC] + sign_extend(offset, 0xff), reg[r0]);
       }
         break;
-      case OP_STI:
+      case OP_STI: {
+        u_int16_t r0 = (instr >> 9) & 0x7;
+        u_int16_t offset = instr & 0x100;
+        u_int16_t addr0 = reg[R_PC] + sign_extend(offset, 0xff);
+        u_int16_t addr1 = mem_read(addr0);
+        mem_write(addr1, r0);
+      }
         break;
       case OP_STR:
         break;
